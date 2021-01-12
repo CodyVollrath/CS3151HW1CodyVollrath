@@ -136,8 +136,34 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		if (index < 0 || index >= this.size) {
+			throw new IndexOutOfBoundsException(this.outOfBoundsMessage(index));
+		}
+		
+		if (index == 0) {
+			E value = this.removeHead();
+			return value;
+		}
+		
+		if (index == (this.size - 1)) {
+			E value = this.removeTail();
+			return value;
+		}
+		
+		Node node = this.head.nextNode;
+		while (index > 0) {
+			node = node.nextNode;
+			index--;
+		}
+		
+		Node nextNode = node.nextNode;
+		Node prevNode = node.prevNode;
+		
+		nextNode.prevNode = prevNode;
+		prevNode.nextNode = nextNode;
+		this.size--;
+		
+		return node.value;
 	}
 
 	@Override
