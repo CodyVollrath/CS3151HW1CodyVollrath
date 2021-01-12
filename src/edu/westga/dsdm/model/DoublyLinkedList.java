@@ -23,9 +23,8 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	
 	
 	@Override
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<E> iterator() {
+		return this.getForwardIterator();
 	}
 
 	/**
@@ -40,21 +39,21 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		Node newNode = new Node(element);
 		
 		
-		if (this.head.nextNode == null) {
+		if (this.head.next == null) {
 			this.addHead(element);
 			return;
 		}
 		this.size++;
 		
-		Node currentNode = this.head.nextNode;
-		while (currentNode.nextNode != this.sentinal) {
-			currentNode = currentNode.nextNode;
+		Node currentNode = this.head.next;
+		while (currentNode.next != this.sentinal) {
+			currentNode = currentNode.next;
 		}
 		
-		currentNode.nextNode = newNode;
-		newNode.nextNode = this.sentinal;
-		newNode.prevNode = currentNode;
-		this.sentinal.prevNode = newNode;
+		currentNode.next = newNode;
+		newNode.next = this.sentinal;
+		newNode.prev = currentNode;
+		this.sentinal.prev = newNode;
 	}
 
 	
@@ -63,17 +62,17 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		Node newNode = new Node(element);
 		this.size++;
 		
-		if (this.head.nextNode == null) {
-			this.head.nextNode = newNode;
-			newNode.prevNode = this.head;
-			newNode.nextNode = this.sentinal;
-			this.sentinal.prevNode = newNode;
+		if (this.head.next == null) {
+			this.head.next = newNode;
+			newNode.prev = this.head;
+			newNode.next = this.sentinal;
+			this.sentinal.prev = newNode;
 			return;
 		}
 		
-		newNode.nextNode = this.head.nextNode;
-		this.head.nextNode = newNode;
-		newNode.prevNode = this.head;
+		newNode.next = this.head.next;
+		this.head.next = newNode;
+		newNode.prev = this.head;
 	}
 
 
@@ -96,27 +95,27 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		Node newNode = new Node(element);
 		this.size++;
 		
-		Node currentNode = this.head.nextNode;
+		Node currentNode = this.head.next;
 		while (index > 1) {
-			currentNode = currentNode.nextNode;
+			currentNode = currentNode.next;
 			index--;
 		}
 		
-		newNode.nextNode = currentNode.nextNode;
-		newNode.prevNode = currentNode;
+		newNode.next = currentNode.next;
+		newNode.prev = currentNode;
 		
-		currentNode.nextNode.prevNode = newNode;
-		currentNode.nextNode = newNode;
+		currentNode.next.prev = newNode;
+		currentNode.next = newNode;
 	}
 
 	@Override
 	public E removeTail() {
-		if (this.head.nextNode == null) {
+		if (this.head.next == null) {
 			return null;
 		}
 		
-		Node tailNode = this.sentinal.prevNode;
-		this.sentinal.prevNode = tailNode.prevNode;
+		Node tailNode = this.sentinal.prev;
+		this.sentinal.prev = tailNode.prev;
 		
 		this.size--;
 		return tailNode.value;
@@ -124,11 +123,11 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E removeHead() {
-		if (this.head.nextNode == null) {
+		if (this.head.next == null) {
 			return null;
 		}
-		Node nodeToRemove = this.head.nextNode;
-		this.head.nextNode = nodeToRemove.nextNode;
+		Node nodeToRemove = this.head.next;
+		this.head.next = nodeToRemove.next;
 		this.size--;
 		
 		return nodeToRemove.value;
@@ -150,17 +149,17 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 			return value;
 		}
 		
-		Node node = this.head.nextNode;
+		Node node = this.head.next;
 		while (index > 0) {
-			node = node.nextNode;
+			node = node.next;
 			index--;
 		}
 		
-		Node nextNode = node.nextNode;
-		Node prevNode = node.prevNode;
+		Node nextNode = node.next;
+		Node prevNode = node.prev;
 		
-		nextNode.prevNode = prevNode;
-		prevNode.nextNode = nextNode;
+		nextNode.prev = prevNode;
+		prevNode.next = nextNode;
 		this.size--;
 		
 		return node.value;
@@ -168,19 +167,19 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E getTail() {
-		if (this.head.nextNode == null) {
+		if (this.head.next == null) {
 			return null;
 		}
-		return this.sentinal.prevNode.value;
+		return this.sentinal.prev.value;
 	}
 
 	@Override
 	public E getHead() {
-		if (this.head.nextNode == null) {
+		if (this.head.next == null) {
 			return null;
 		}
 		
-		return this.head.nextNode.value;
+		return this.head.next.value;
 	}
 
 	@Override
@@ -189,9 +188,9 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 			throw new IndexOutOfBoundsException(this.outOfBoundsMessage(index));
 		}
 		
-		Node node = this.head.nextNode;
+		Node node = this.head.next;
 		while (index > 0) {
-			node = node.nextNode;
+			node = node.next;
 			index--;
 		}
 		
@@ -209,30 +208,70 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	}
 
 	@Override
-	public Iterator getForwardIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<E> getForwardIterator() {
+		return new ForwardIterator();
 	}
 
 	@Override
-	public Iterator getBackwardIterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<E> getBackwardIterator() {
+		return new BackwardIterator();
 	}
 	
 	private String outOfBoundsMessage(int index) {
 		return "Index " + index + " out of bounds for list of size " + this.size;
 	}
 	
+	private final class ForwardIterator implements Iterator<E> {
+		
+		private Node nextNode;
+		
+		private ForwardIterator() {
+			this.nextNode = DoublyLinkedList.this.head.next;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return this.nextNode != null;
+		}
+
+		@Override
+		public E next() {
+			E value = this.nextNode.value;
+			this.nextNode = this.nextNode.next;
+			return value;
+		}
+	}
+	
+	private final class BackwardIterator implements Iterator<E> {
+		
+		private Node prevNode;
+		
+		private BackwardIterator() {
+			this.prevNode = DoublyLinkedList.this.sentinal.prev;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return this.prevNode != null;
+		}
+
+		@Override
+		public E next() {
+			E value = this.prevNode.value;
+			this.prevNode = this.prevNode.prev;
+			return value;
+		}
+	}
+	
 	private final class Node {
 		private E value;
-		private Node prevNode;
-		private Node nextNode;
+		private Node prev;
+		private Node next;
 		
 		private Node(E item) {
 			this.value = item;
-			this.prevNode = null;
-			this.nextNode = null;
+			this.prev = null;
+			this.next = null;
 		}
 	}
 
