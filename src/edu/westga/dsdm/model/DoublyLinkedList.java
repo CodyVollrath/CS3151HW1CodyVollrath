@@ -114,6 +114,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		if (this.head.nextNode == null) {
 			return null;
 		}
+		
 		Node tailNode = this.sentinal.prevNode;
 		this.sentinal.prevNode = tailNode.prevNode;
 		
