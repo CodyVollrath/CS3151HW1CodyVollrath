@@ -97,8 +97,8 @@ public class SinglyLinkedList<E> implements LinkedListOperations<E> {
 	/**
 	 * removes the element at the tail of this list
 	 * 
-	 * @pre size() > 0
-	 * @post size() == size()@pre - 1
+	 * @Pre size() > 0
+	 * @post size() == size()@Pre - 1
 	 * @return the removed element
 	 * @throws NoSuchElementException if this list is empty
 	 */

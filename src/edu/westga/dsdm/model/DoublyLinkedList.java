@@ -2,6 +2,7 @@ package edu.westga.dsdm.model;
 
 import java.util.Iterator;
 
+
 public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	private Node head;
@@ -37,35 +38,75 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	@Override
 	public void addTail(E element) {
 		Node newNode = new Node(element);
-		this.size++;
+		
 		
 		if (this.head.nextNode == null) {
-			this.head.nextNode = newNode;
-			this.sentinal.prevNode = newNode;
+			this.addHead(element);
 			return;
 		}
+		this.size++;
 		
-		Node node = this.head.nextNode;
-		while (node.nextNode != null) {
-			node = node.nextNode;
+		Node currentNode = this.head.nextNode;
+		while (currentNode.nextNode != this.sentinal) {
+			currentNode = currentNode.nextNode;
 		}
-		node.nextNode = newNode;
+		
+		currentNode.nextNode = newNode;
+		newNode.nextNode = this.sentinal;
+		newNode.prevNode = currentNode;
 		this.sentinal.prevNode = newNode;
 	}
 
+	
 	@Override
 	public void addHead(E element) {
 		Node newNode = new Node(element);
 		this.size++;
 		
+		if (this.head.nextNode == null) {
+			this.head.nextNode = newNode;
+			newNode.prevNode = this.head;
+			newNode.nextNode = this.sentinal;
+			this.sentinal.prevNode = newNode;
+			return;
+		}
+		
 		newNode.nextNode = this.head.nextNode;
 		this.head.nextNode = newNode;
+		newNode.prevNode = this.head;
 	}
 
+	//TODO Does not work, sential value never gets updated
 	@Override
 	public void add(int index, E element) {
-		// TODO Auto-generated method stub
+		if (index < 0 || index > this.size) {
+			throw new IndexOutOfBoundsException(this.outOfBoundsMessage(index));
+		}
 		
+		if (index == 0) {
+			this.addHead(element);
+			return;
+		}
+		
+		if (index == this.size) {
+			this.addTail(element);
+			return;
+		}
+		
+		Node newNode = new Node(element);
+		this.size++;
+		
+		Node currentNode = this.head.nextNode;
+		while (index > 1) {
+			currentNode = currentNode.nextNode;
+			index--;
+		}
+		
+		newNode.nextNode = currentNode.nextNode;
+		newNode.prevNode = currentNode;
+		
+		currentNode.nextNode.prevNode = newNode;
+		currentNode.nextNode = newNode;
 	}
 
 	@Override
@@ -76,8 +117,14 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E removeHead() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.head.nextNode == null) {
+			return null;
+		}
+		Node nodeToRemove = this.head.nextNode;
+		this.head.nextNode = nodeToRemove.nextNode;
+		this.size--;
+		
+		return nodeToRemove.value;
 	}
 
 	@Override
@@ -119,8 +166,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.size == 0;
 	}
 
 	@Override

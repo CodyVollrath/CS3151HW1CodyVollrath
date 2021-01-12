@@ -1,5 +1,6 @@
 package edu.westga.dsdm.testdoublylinkedlist;
 
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.westga.dsdm.model.DoublyLinkedList;
 
-public class TestAddTail {
+class TestAdd {
 
 	private DoublyLinkedList<Integer> list;
 	
@@ -19,7 +20,7 @@ public class TestAddTail {
 
 	@Test
 	public void testAddEmpty() {
-		this.list.addTail(1);
+		this.list.add(0, 1);
 		assertAll(() -> {
 			assertEquals(1, this.list.getHead());
 			assertEquals(1, this.list.getTail());
@@ -29,28 +30,26 @@ public class TestAddTail {
 	
 	@Test
 	public void testAddWithOneInList() {
-		this.list.addTail(1);
-		this.list.addTail(2);
+		this.list.addHead(1);
+		this.list.add(1, 2);
 		assertAll(() -> {
+			assertEquals(1, this.list.get(0));
 			assertEquals(1, this.list.getHead());
+			assertEquals(2, this.list.get(1));
 			assertEquals(2, this.list.getTail());
-			assertEquals(2, this.list.size());
 		});
 	}
 	
 	@Test
 	public void testAddWithMultipleInList() {
-		this.list.addTail(1);
-		this.list.addTail(2);
+		this.list.addHead(1);
 		this.list.addTail(3);
-		
+		this.list.add(1, 2);
 		assertAll(() -> {
-			assertEquals(1, this.list.getHead());
+			assertEquals(3, this.list.size());
+			assertEquals(1, this.list.get(0));
 			assertEquals(2, this.list.get(1));
 			assertEquals(3, this.list.get(2));
-			assertEquals(1, this.list.get(0));
-			assertEquals(3, this.list.getTail());
-			assertEquals(3, this.list.size());
 		});
 	}
 
