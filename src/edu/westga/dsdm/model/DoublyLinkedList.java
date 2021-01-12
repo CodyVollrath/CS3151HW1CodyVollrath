@@ -76,7 +76,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		newNode.prevNode = this.head;
 	}
 
-	//TODO Does not work, sential value never gets updated
+
 	@Override
 	public void add(int index, E element) {
 		if (index < 0 || index > this.size) {
@@ -111,8 +111,14 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E removeTail() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.head.nextNode == null) {
+			return null;
+		}
+		Node tailNode = this.sentinal.prevNode;
+		this.sentinal.prevNode = tailNode.prevNode;
+		
+		this.size--;
+		return tailNode.value;
 	}
 
 	@Override
