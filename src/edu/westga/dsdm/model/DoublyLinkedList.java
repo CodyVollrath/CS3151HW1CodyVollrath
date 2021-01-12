@@ -141,6 +141,9 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E getTail() {
+		if (this.head.nextNode == null) {
+			return null;
+		}
 		return this.sentinal.prevNode.value;
 	}
 
