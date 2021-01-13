@@ -3,6 +3,7 @@ package edu.westga.dsdm.testdoublylinkedlist;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,13 @@ class TestAdd {
 		this.list = new DoublyLinkedList<Integer>();
 	}
 
+	@Test
+	public void testAddInvalid() {
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			this.list.add(1, 2);
+		});
+	}
+	
 	@Test
 	public void testAddEmpty() {
 		this.list.add(0, 1);

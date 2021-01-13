@@ -1,19 +1,38 @@
 package edu.westga.dsdm.testdoublylinkedlist;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TestGetTail {
+import edu.westga.dsdm.model.DoublyLinkedList;
 
+public class TestGetTail {
+
+	private DoublyLinkedList<Integer> list;
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
+		this.list = new DoublyLinkedList<Integer>();
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	public void testGetEmptyTail() {
+		assertEquals(null, this.list.getTail());
+	}
+	
+	@Test
+	public void testGetSingleTail() {
+		this.list.add(0, 1);
+		assertEquals(1, this.list.getTail());
+	}
+	
+	@Test
+	public void testGetMultiItemTail() {
+		this.list.add(0, 1);
+		this.list.add(1, 2);
+		this.list.add(2, 3);
+		assertEquals(3, this.list.getTail());
 	}
 
 }
