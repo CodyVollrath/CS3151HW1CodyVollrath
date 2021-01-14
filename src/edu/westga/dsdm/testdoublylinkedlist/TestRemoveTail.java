@@ -2,6 +2,7 @@ package edu.westga.dsdm.testdoublylinkedlist;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,6 +62,8 @@ class TestRemoveTail {
 			assertEquals(1, value3);
 			assertEquals(0, this.list.size());
 			assertEquals(null, this.list.getTail());
+			assertEquals(null, this.list.getHead());
+			assertTrue(this.list.isEmpty());
 		});
 		
 	}

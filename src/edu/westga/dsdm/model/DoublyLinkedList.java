@@ -116,8 +116,9 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		
 		Node tailNode = this.sentinal.prev;
 		this.sentinal.prev = tailNode.prev;
-		
+		tailNode.prev.next = tailNode.prev;
 		this.size--;
+		
 		return tailNode.value;
 	}
 
@@ -128,6 +129,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		}
 		Node nodeToRemove = this.head.next;
 		this.head.next = nodeToRemove.next;
+		nodeToRemove.next.prev = nodeToRemove.next;
 		this.size--;
 		
 		return nodeToRemove.value;
@@ -167,7 +169,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 
 	@Override
 	public E getTail() {
-		if (this.head.next == null) {
+		if (this.sentinal.prev == null) {
 			return null;
 		}
 		return this.sentinal.prev.value;
@@ -231,7 +233,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		
 		@Override
 		public boolean hasNext() {
-			return this.nextNode != null;
+			return this.nextNode != DoublyLinkedList.this.sentinal && this.nextNode != null;
 		}
 
 		@Override
@@ -252,7 +254,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		
 		@Override
 		public boolean hasNext() {
-			return this.prevNode != null;
+			return this.prevNode != DoublyLinkedList.this.head && this.prevNode != null;
 		}
 
 		@Override
