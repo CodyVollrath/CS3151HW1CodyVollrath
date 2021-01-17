@@ -93,6 +93,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * 
 	 * @Pre index >= 0  && index <= size()
 	 * @Post size() == size()@Pre + 1 && get(index) == element;
+	 * @throws IndexOutOfBoundsException if the index is less than 0 or index is greater than size
 	 */
 	@Override
 	public void add(int index, E element) {
@@ -132,6 +133,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre none
 	 * @Post size() == size()@Pre - 1;
 	 * @return the element removed
+	 * @throws NoSuchElementException if this list is empty
 	 */
 	@Override
 	public E removeTail() {
@@ -153,6 +155,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre none
 	 * @Post size() == size()@Pre - 1;
 	 * @return the element removed
+	 * @throws NoSuchElementException if this list is empty
 	 */
 	@Override
 	public E removeHead() {
@@ -173,6 +176,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre index >= 0 && index < size()
 	 * @Post size() == size()@Pre - 1;
 	 * @return the element removed
+	 * @throws IndexOutOfBoundsException if index less than 0 or index is greater than or equal to size
 	 */
 	@Override
 	public E remove(int index) {
@@ -211,6 +215,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre none
 	 * @Post none
 	 * @return the element at the end of the list
+	 * @throws NoSuchElementException if this list is empty
 	 */
 	@Override
 	public E getTail() {
@@ -225,6 +230,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre none
 	 * @Post none
 	 * @return the element at the start of the list
+	 * @throws NoSuchElementException if this list is empty
 	 */
 	@Override
 	public E getHead() {
@@ -240,6 +246,8 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * @Pre index >= 0 && index < size
 	 * @Post none
 	 * @return the element at the index of the list
+	 * @throws IndexOutOfBoundsException if index less than 0 or index is greater than or equal to size
+	 * 
 	 */
 	@Override
 	public E get(int index) {
@@ -260,6 +268,7 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	 * Gets the size of the list
 	 * 
 	 * @return the size of the list
+	 * @throws IndexOutOfBoundsException if index less than 0 or index is greater than or equal to size
 	 */
 	@Override
 	public int size() {
