@@ -1,6 +1,7 @@
 package edu.westga.dsdm.model;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
 public class DoublyLinkedList<E> implements LinkedListOperations<E> {
@@ -21,7 +22,12 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		this.size = 0;
 	}
 	
-	
+	/**
+	 * Gets the forward iterator
+	 * 
+	 * @Pre None
+	 * @Post none
+	 */
 	@Override
 	public Iterator<E> iterator() {
 		return this.getForwardIterator();
@@ -57,6 +63,12 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	}
 
 	
+	/**
+	 * Adds to the beginning of the list
+	 * 
+	 * @Pre none
+	 * @Post size() == size()@Pre + 1 && getHead() == element;
+	 */
 	@Override
 	public void addHead(E element) {
 		Node newNode = new Node(element);
@@ -76,6 +88,12 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 	}
 
 
+	/**
+	 * Adds to any position of the list
+	 * 
+	 * @Pre index >= 0  && index <= size()
+	 * @Post size() == size()@Pre + 1 && get(index) == element;
+	 */
 	@Override
 	public void add(int index, E element) {
 		if (index < 0 || index > this.size) {
@@ -107,11 +125,18 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		currentNode.next.prev = newNode;
 		currentNode.next = newNode;
 	}
-
+	
+	/**
+	 * Removes the last item in the list
+	 * 
+	 * @Pre none
+	 * @Post size() == size()@Pre - 1;
+	 * @return the element removed
+	 */
 	@Override
 	public E removeTail() {
-		if (this.head.next == null) {
-			return null;
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
 		}
 		
 		Node tailNode = this.sentinal.prev;
@@ -122,10 +147,17 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		return tailNode.value;
 	}
 
+	/**
+	 * Removes the first item in the list
+	 * 
+	 * @Pre none
+	 * @Post size() == size()@Pre - 1;
+	 * @return the element removed
+	 */
 	@Override
 	public E removeHead() {
-		if (this.head.next == null) {
-			return null;
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
 		}
 		Node nodeToRemove = this.head.next;
 		this.head.next = nodeToRemove.next;
@@ -135,6 +167,13 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		return nodeToRemove.value;
 	}
 
+	/**
+	 * Removes the item at the index given
+	 * 
+	 * @Pre index >= 0 && index < size()
+	 * @Post size() == size()@Pre - 1;
+	 * @return the element removed
+	 */
 	@Override
 	public E remove(int index) {
 		if (index < 0 || index >= this.size) {
@@ -167,23 +206,41 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		return node.value;
 	}
 
+	/**
+	 * Gets the end element in the list
+	 * @Pre none
+	 * @Post none
+	 * @return the element at the end of the list
+	 */
 	@Override
 	public E getTail() {
-		if (this.sentinal.prev == null) {
-			return null;
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
 		}
 		return this.sentinal.prev.value;
 	}
 
+	/**
+	 * Gets the start element in the list
+	 * @Pre none
+	 * @Post none
+	 * @return the element at the start of the list
+	 */
 	@Override
 	public E getHead() {
-		if (this.head.next == null) {
-			return null;
+		if (this.isEmpty()) {
+			throw new NoSuchElementException();
 		}
 		
 		return this.head.next.value;
 	}
 
+	/**
+	 * Gets the element at the index
+	 * @Pre index >= 0 && index < size
+	 * @Post none
+	 * @return the element at the index of the list
+	 */
 	@Override
 	public E get(int index) {
 		if (index < 0 || index >= this.size) {
@@ -199,21 +256,39 @@ public class DoublyLinkedList<E> implements LinkedListOperations<E> {
 		return node.value;
 	}
 
+	/**
+	 * Gets the size of the list
+	 * 
+	 * @return the size of the list
+	 */
 	@Override
 	public int size() {
 		return this.size;
 	}
 
+	/**
+	 * Determines if the list is empty
+	 * 
+	 * @return true if the list size is 0 false otherwise
+	 */
 	@Override
 	public boolean isEmpty() {
 		return this.size == 0;
 	}
 
+	/**
+	 * The iterator for traversing the list forwards
+	 * @return the forward iterator
+	 */
 	@Override
 	public Iterator<E> getForwardIterator() {
 		return new ForwardIterator();
 	}
 
+	/**
+	 * The iterator for traversing the list backwards
+	 * @return the backward iterator
+	 */
 	@Override
 	public Iterator<E> getBackwardIterator() {
 		return new BackwardIterator();

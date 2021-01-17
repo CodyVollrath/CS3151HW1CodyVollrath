@@ -1,6 +1,10 @@
 package edu.westga.dsdm.testdoublylinkedlist;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.NoSuchElementException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +20,9 @@ class TestGetHead {
 
 	@Test
 	public void testGetEmptyHead() {
-		assertEquals(null, this.list.getHead());
+		assertThrows(NoSuchElementException.class, () -> {
+			this.list.getHead();
+		});
 	}
 	
 	@Test

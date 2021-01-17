@@ -2,7 +2,10 @@ package edu.westga.dsdm.testdoublylinkedlist;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +23,9 @@ class TestRemoveHead {
 
 	@Test
 	public void testRemoveEmpty() {
-		Integer value = this.list.removeHead();
-		assertEquals(null, value);
+		assertThrows(NoSuchElementException.class, () -> {
+			this.list.removeHead();
+		});
 	}
 	
 	@Test
@@ -31,7 +35,9 @@ class TestRemoveHead {
 		assertAll(()-> {
 			assertEquals(1, value);
 			assertEquals(0, this.list.size());
-			assertEquals(null, this.list.getHead());
+			assertThrows(NoSuchElementException.class, () -> {
+				this.list.getHead();
+			});
 		});
 	}
 	
@@ -64,8 +70,12 @@ class TestRemoveHead {
 			assertEquals(2, value2);
 			assertEquals(3, value3);
 			assertEquals(0, this.list.size());
-			assertEquals(null, this.list.getHead());
-			assertEquals(null, this.list.getTail());
+			assertThrows(NoSuchElementException.class, () -> {
+				this.list.getHead();
+			});
+			assertThrows(NoSuchElementException.class, () -> {
+				this.list.getTail();
+			});
 			assertTrue(this.list.isEmpty());
 		});
 	}
